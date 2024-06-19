@@ -5,6 +5,16 @@
 
 /** @type {import('jest').Config} */
 const config = {
+
+  // Indicates which provider should be used to instrument code for coverage
+  coverageProvider: "v8",
+
+  // The test environment that will be used for testing
+  testEnvironment: "jest-environment-node",
+
+  // A preset that is used as a base for Jest's configuration
+  preset: 'ts-jest',
+
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -30,9 +40,6 @@ const config = {
   // coveragePathIgnorePatterns: [
   //   "/node_modules/"
   // ],
-
-  // Indicates which provider should be used to instrument code for coverage
-  coverageProvider: "v8",
 
   // A list of reporter names that Jest uses when writing coverage reports
   // coverageReporters: [
@@ -100,9 +107,6 @@ const config = {
   // An enum that specifies notification mode. Requires { notify: true }
   // notifyMode: "failure-change",
 
-  // A preset that is used as a base for Jest's configuration
-  // preset: undefined,
-
   // Run tests from one or more projects
   // projects: undefined,
 
@@ -144,8 +148,7 @@ const config = {
   // A list of paths to snapshot serializer modules Jest should use for snapshot testing
   // snapshotSerializers: [],
 
-  // The test environment that will be used for testing
-  // testEnvironment: "jest-environment-node",
+
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},

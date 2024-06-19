@@ -1,13 +1,28 @@
 // components/Checkout.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Button, Heading, Stack, Text } from '@chakra-ui/react';
-import { products } from '../models/products';
+import { Product } from '../models/products';
 
 const Checkout: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([]);
   const [cart, setCart] = useState<{ [sku: string]: number }>({});
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [discountedPrice, setDiscountedPrice] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isProductLoading, setIsProductLoading] = useState<boolean>(true);
+
+
+  const fetchProducts = async () => {
+    setIsProductLoading(true);
+    const response = await fetch('/api/products');
+    const data = await response.json();
+    setProducts(data.products);
+    setIsProductLoading(false);
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   const addToCart = async (sku: string) => {
     setCart((prevCart) => ({
@@ -42,22 +57,31 @@ const Checkout: React.FC = () => {
 
     setIsLoading(false);
   };
+
   return (
     <Box p={10}>
       <Heading as="h1" size="xl" mb={8}>
         Swift Checkout
       </Heading>
 
-      <Stack spacing={4}>
-        {products.map((product) => (
-          <Box key={product.sku} display="flex" justifyContent="space-between" alignItems="center">
-            <Text>
-              {product.name} - ${product.price}
-            </Text>
-            <Button onClick={() => addToCart(product.sku)}>Add to Cart</Button>
-          </Box>
-        ))}
-      </Stack>
+      {
+        isProductLoading ? (
+          <Text>Loading products...</Text>
+        ) : products && products.length > 0 ? (
+          <Stack spacing={4}>
+            {products.map((product) => (
+              <Box key={product.sku} display="flex" justifyContent="space-between" alignItems="center">
+                <Text>
+                  {product.name} - ${product.price}
+                </Text>
+                <Button onClick={() => addToCart(product.sku)}>Add to Cart</Button>
+              </Box>
+            ))}
+          </Stack>
+        ) : (
+          <Text>No products found.</Text>
+        )
+      }
 
       <Box mt={8}>
         <Heading as="h2" size="lg" mb={4}>

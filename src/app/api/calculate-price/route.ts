@@ -5,7 +5,6 @@ import { HttpStatusCode } from "axios";
 
 export async function POST(req: NextRequest) {
     const { skus } = await req.json();
-    console.debug("skus:" , skus)
     if (!Array.isArray(skus)) {
         return NextResponse.json(
             { error: "Invalid request. SKUs must be an array." },

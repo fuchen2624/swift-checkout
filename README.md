@@ -77,7 +77,7 @@ This project is an implementation of a checkout system for Relay Club's computer
 
 ## Pricing Rules
 
-The pricing rules are stored in the `pricing_rules` table in Supabase. Sales managers can update the pricing rules through the admin interface.
+The pricing rules are stored in the `pricing_rules` table in Supabase. Sales managers can update the pricing rules through the admin interface. `http://localhost:3000/admin/pricing-rules`
 
 The available pricing rule types are:
 

@@ -1,10 +1,5 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
-
-const supabase: SupabaseClient = createClient(supabaseUrl!, supabaseServiceKey!);
-
 export interface PricingRule {
   id: number;
   sku: string;
@@ -13,6 +8,10 @@ export interface PricingRule {
 }
 
 export async function getPricingRules(sku: string): Promise<PricingRule[]> {
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
+
+  const supabase: SupabaseClient = createClient(supabaseUrl!, supabaseServiceKey!);
   const { data: rules, error } = await supabase
     .from<'pricing_rules', PricingRule>('pricing_rules')
     .select('*')
